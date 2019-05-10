@@ -1,3 +1,5 @@
+转载： <https://juejin.im/post/59c32516f265da065f04a4a4>
+
 - 环境
     
     MyCat 1.6-RELEASE
