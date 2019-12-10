@@ -17,3 +17,27 @@ chmod +x /usr/local/bin/docker-compose
 $docker-compose --version
 
 	docker-compose version 1.24.0, build 0aa59064
+
+### centos安装docker-compose
+```
+#查看docker compose版本
+ docker-compose version
+
+#查看pip版本
+ pip -v
+
+#上一条语句没有显示版本信息则运行下面语句安装 python-pip
+ yum -y install epel-release
+ yum -y install python-pip
+
+#查看pip版本
+ pip -v
+
+#pip进行升级
+ pip install --upgrade pip
+
+#进行安装compose 第一条语句报错执行第二条，执行成功则跳过第二条
+ pip install docker-compose
+ pip install docker-compose --ignore-installed requests
+ docker-compose -version
+```
