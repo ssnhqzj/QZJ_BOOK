@@ -288,8 +288,8 @@ services:
 
 整个ELK环境所需的镜像和脚本都做好了，还有一个问题需要注意，否则有可能导致你的filebeat连接ELK server失败；
 
-## fliebeat与ELK server的连接问题
-下图是filebeat的filebeat.yml文件的内容，红框中的elkhost，是docker启动时候的link参数，在写这个参数的时候要注意两点：
+## 问题1：fliebeat与ELK server的连接问题
+下图是 filebeat的filebeat.yml文件的内容，红框中的elkhost，是docker启动时候的link参数，在写这个参数的时候要注意两点：
 
 ![](res/elk-04.png)
 
@@ -305,13 +305,57 @@ services:
 
 至此，制作ELK环境的细节的实战就结束了，您可以用自己的web来实战一番，看看是否能更方便的搜索日志了；
 
-接下来的章节，我们将ELK server和web应用都搬到kubernetes环境上去，这样就更接近生产环境：多个web容器同时运行的时候，查日志不必再登录到每一台上去搜索了；
+接下来的章节，我们将ELK
+server和web应用都搬到kubernetes环境上去，这样就更接近生产环境：多个web容器同时运行的时候，查日志不必再登录到每一台上去搜索了；
 
+## 问题2： filebeat无法连接到logstash之取消证书
+原因是filebeat使用证书只支持域名，不支持ip，所以我们取消证书
 
-————————————————
+首先，在filebeat.yml中注释掉output中ssl开始的设置证书字段
 
-版权声明：本文为CSDN博主「程序员欣宸」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/boling_cavalry/article/details/79972444
+其次，进入elk容器，进入/etc/logstash/conf.d中的02-beats-input.conf文件，删除掉如下ssl开头的三行
+```
+input {
+  beats {
+    port => 5044
+    ssl => true
+    ssl_certificate => "/etc/pki/tls/certs/logstash-beats.crt"
+    ssl_key => "/etc/pki/tls/private/logstash-beats.key"
+  }
+}
+```
 
+### 问题3： 自定义日志的索引
+
+首先，下filebeat.yml中定义一个field，如下的system: sys
+
+```
+- type: log
+
+  # Change to true to enable this prospector configuration.
+  enabled: true
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /logs/sys/*.log
+    #- c:\programdata\elasticsearch\logs\*
+  tags: ["sys"]
+  fields:
+      system: sys
+```
+
+其次，进入elk容器，进入/etc/logstash/conf.d中的30-output.conf文件，设置index变量如下：
+
+```
+output {
+  elasticsearch {
+    hosts => ["localhost"]
+    manage_template => false
+    index => "%{[fields][system]}-%{+YYYY.MM.dd}"
+    document_type => "%{[@metadata][type]}"
+  }
+}
+
+```
 
 

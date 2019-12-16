@@ -26,5 +26,32 @@ sudo docker push localhost:5000/nginx:v3
 
 ### 4.测试本地仓库的的可用性
 ```
-sudo docker pull 123.207.55.60:5000/nginx:v3
+ sudo docker pull 123.207.55.60:5000/nginx:v3
 ```
+
+### 5.查询仓库的镜像
+```
+ curl -XGET http://192.168.36.130:5000/v2/_catalog
+```
+
+### 6.遇到的问题
+
+#### Get https://172.18.18.90:5000/v2/: http: server gave HTTP response to HTTPS client
+这是报错了，需要https的方法才能上传，我们可以修改下daemon.json来解决：
+
+```
+[root@node ~]# vim /etc/docker/daemon.json
+{
+  "registry-mirrors": [ "https://registry.docker-cn.com"],
+  "insecure-registries": [ "172.18.18.90:5000"]
+}
+```
+
+添加私有镜像服务器的地址，注意书写格式为json，有严格的书写要求，然后重启docker服务：
+
+```
+[root@node ~]# systemctl  restart docker
+```
+
+注：这一步一定要在创建私有仓库的容器之前，否则修改配置文件不会生效
+
