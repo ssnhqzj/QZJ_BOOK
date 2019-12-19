@@ -358,4 +358,7 @@ output {
 
 ```
 
+### 附件
+    springboot-app-filebeat基础镜像的构建文件在res/docker目录下
+
 

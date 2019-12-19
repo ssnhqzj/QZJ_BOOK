@@ -1,0 +1,16 @@
+version: '2'
+services:
+  elk:
+    image: sebp/elk:623
+    ports:
+      - "5601:5601"
+    restart: always
+  webapp:
+    image: sofn/sys-service
+    depends_on:
+      - elk
+    links:
+      - elk:elkhost
+    ports:
+      - "8881:8881"
+    restart: always
