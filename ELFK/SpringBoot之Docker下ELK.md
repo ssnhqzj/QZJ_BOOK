@@ -358,6 +358,27 @@ output {
 
 ```
 
+### 问题4：max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+
+```
+解决：
+切换到root用户
+执行命令：
+sysctl -w vm.max_map_count=262144
+
+查看结果：
+sysctl -a|grep vm.max_map_count
+
+显示：
+vm.max_map_count = 262144
+
+上述方法修改之后，如果重启虚拟机将失效，所以：
+解决办法：
+在   /etc/sysctl.conf文件最后添加一行
+vm.max_map_count=262144
+即可永久修改
+```
+
 ### 附件
     springboot-app-filebeat基础镜像的构建文件在res/docker目录下
 
