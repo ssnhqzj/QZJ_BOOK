@@ -55,3 +55,4 @@ sudo docker push localhost:5000/nginx:v3
 
 注：这一步一定要在创建私有仓库的容器之前，否则修改配置文件不会生效
 
+

@@ -12,7 +12,7 @@ mvn clean package -U -DskipTests docker:build
 ```
 docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk:623
 
-# 使用host网络
+# 使用host网络,容器之间可通过宿主机IP相互访问
 docker run -it --name elk --network host sebp/elk:623
 ```
 
@@ -20,6 +20,6 @@ docker run -it --name elk --network host sebp/elk:623
 ```
 docker run -d --link elk:elk -p 8881:8881 -it --name sys-01 sofn/sys-service:latest
 
-# 使用host网络
+# 使用host网络,容器之间可通过宿主机IP相互访问
 docker run -it --name sys-01 --network host sofn/sys-service:latest
 ```
