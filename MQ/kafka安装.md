@@ -23,9 +23,9 @@ log.dirs=/data/kafka-logs
 zookeeper.connect=192.168.230.128:2181,192.168.230.129:2181,192.168.230.130:2181
 
 3.启动
-
+```shell
 [root@localhost /]# cd /usr/local/kafka_2.11-2.3.0/
-[root@localhost kafka_2.11-2.3.0]# bin/kafka-server-start.sh config/server.properties &
+[root@localhost kafka_2.11-2.3.0]# bin/kafka-server-start.sh -daemon ./config/server.properties &
 验证
 // 创建topic
 [root@localhost kafka_2.11-2.3.0]# ./bin/kafka-topics.sh --create --zookeeper 192.168.230.130:2181 --replication-factor 1 --partitions 3 --topic MY_KAFKA_TOPIC
@@ -46,5 +46,20 @@ cd /usr/local/kafka_2.11-2.3.0/
 // 窗口2---启动消费者
 cd /usr/local/kafka_2.11-2.3.0/
 ./bin/kafka-console-consumer.sh --bootstrap-server 192.168.230.130:9092  --topic MY_KAFKA_TOPIC  --from-beginning
+```
+
 
 启动后生产者发送消息，可以看到消费者中可以收到消息
+
+### 进程守护模式启动kafka
+
+```
+nohup bin/kafka-server-start.sh config/server.properties >/dev/null 2>&1 & 
+```
+
+ 
+
+### Kafka关闭命令(备注：先进入kafka目录)
+```
+bin/kafka-server-stop.sh
+```

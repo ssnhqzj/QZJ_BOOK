@@ -17,6 +17,12 @@
 
 ## ELK server
 ELK server镜像的tag是622，代表6.2.2版本，下载命令：docker pull sebp/elk:622，有兴趣的同学可以去看一下对应的Dockerfile，地址：https://hub.docker.com/r/sebp/elk/~/dockerfile/
+```shell
+docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk --network host -v 709d0129d82f04df11f743c526b607410c2318f391eddd3dcf7028030f96b724 sebp/elk:623
+
+docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk:623
+
+```
 
 ### 制作带有filebeat服务的基础镜像bolingcavalry/springboot-app-filebeat
 制作该镜像的是本文的主要内容，制作前我们列出镜像的功能：

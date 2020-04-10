@@ -21,6 +21,7 @@ docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:la
 // 表名大小写不敏感
 docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest --lower_case_table_names=1
 
+docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=jzt@91530127MA6NH14262# -d mysql:latest --lower_case_table_names=1
 ```
 这里的容器名字叫：mysqldb，mysql的root用户密码是：123456，映射宿主机子的端口3306到容器的端口3306，仓库名mysql和标签(tag)latest唯一确定了要指定的镜像。注意：就算这里只有一个mysql也有必须要有tag
 
