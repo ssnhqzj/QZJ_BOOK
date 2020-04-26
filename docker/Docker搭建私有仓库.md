@@ -43,7 +43,7 @@ sudo docker push localhost:5000/nginx:v3
 [root@node ~]# vim /etc/docker/daemon.json
 {
   "registry-mirrors": [ "https://registry.docker-cn.com"],
-  "insecure-registries": [ "172.18.18.90:5000"]
+  "insecure-registries": [ "10.0.52.21:5000"]
 }
 ```
 
