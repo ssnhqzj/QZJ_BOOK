@@ -16,16 +16,7 @@ for log in $logs
         do  
              ls -lh $log   
         done  
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 # chmod +x docker_log_size.sh
 
 # ./docker_log_size.sh

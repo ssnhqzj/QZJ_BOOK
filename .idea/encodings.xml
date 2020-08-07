@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://I:/LvKangYuan/sofn-eep/sofn-common/src/main/resources/config/application-local.properties" charset="UTF-8" />
+    <file url="file://I:/LvKangYuan/sofn-eep/sofn-common/src/main/resources/config/application-prod.properties" charset="UTF-8" />
     <file url="file://I:/LvKangYuan/sofn-eep/sofn-common/src/main/resources/config/db-test.properties" charset="UTF-8" />
   </component>
 </project>
