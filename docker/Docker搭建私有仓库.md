@@ -5,7 +5,7 @@ sudo docker pull registry:latest
 
 ### 2. 创建一个注册服务器容器
 ```
-sudo docker run -d -p 5000:5000 --name server-registry -v /tmp/registry:/tmp/registry docker.io/registry:latest
+sudo docker run -d -p 5000:5000 --name server-registry -v /tmp/registry:/tmp/registry --privileged=true docker.io/registry:latest
 ```
 
 参数说明
