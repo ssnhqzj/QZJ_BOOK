@@ -1,3 +1,5 @@
+<https://blog.csdn.net/boling_cavalry/article/details/79972444?utm_source=blogxgwz7>
+
 ## 核心技术点
 前一章中，之所以能通过一个docker-compose.yml将整个环境运行起来，所依赖的核心技术点为以下三个docker镜像：
 
@@ -16,11 +18,11 @@
 接下来我们将上面几点逐个展开细说；
 
 ## ELK server
-ELK server镜像的tag是622，代表6.2.2版本，下载命令：docker pull sebp/elk:622，有兴趣的同学可以去看一下对应的Dockerfile，地址：https://hub.docker.com/r/sebp/elk/~/dockerfile/
+ELK server镜像的tag是623，代表6.2.3版本，下载命令：docker pull sebp/elk:623，有兴趣的同学可以去看一下对应的Dockerfile，地址：https://hub.docker.com/r/sebp/elk/~/dockerfile/
 ```shell
 docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk --network host -v 709d0129d82f04df11f743c526b607410c2318f391eddd3dcf7028030f96b724 sebp/elk:623
 
-docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk:623
+docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk --network host sebp/elk:623
 
 ```
 
@@ -355,7 +357,7 @@ input {
 ```
 output {
   elasticsearch {
-    hosts => ["localhost"]
+    hosts => ["localhost:9200"]
     manage_template => false
     index => "%{[fields][system]}-%{+YYYY.MM.dd}"
     document_type => "%{[@metadata][type]}"
