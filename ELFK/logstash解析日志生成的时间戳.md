@@ -29,19 +29,21 @@ filter {
 
     grok {
       match => { "message" => "%{TIMESTAMP_ISO8601:logdate}" }
+      add_field => {"logdt" => "%{logdate}"}
     }
 
     syslog_pri { }
-
+    
     date {
       timezone => "Asia/Chongqing"
-      match => [ "logdate", "yyyy-MM-dd HH:mm:ss.SSS Z" ]
+      match => [ "logdate", "yyyy-MM-dd HH:mm:ss.SSS" ]
       target => "logdate"
     }
 
     mutate {
-      # 替换message中的时间戳为空
-      gsub => [ "message","%{logdate}","" ]
+      # 替换message中的logdt为空
+      gsub => [ "message","%{logdt} - ","" ]
+      remove_field => ["logdt"] 
     }
 
 
