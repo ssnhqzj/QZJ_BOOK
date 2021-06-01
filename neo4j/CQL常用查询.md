@@ -12,3 +12,15 @@ MATCH (n) RETURN labels(n),count(*)
 ```genericsql
 match (n) where not (n)--() return id(n)
 ```
+
+## 根据标签集合查询实体
+```genericsql
+match (n) where any(label in labels(n) WHERE label in ['COUNTRY', 'junjian']) return n
+```
+
+## 修改实体标签
+```genericsql
+MATCH (n:OLD_LABEL)
+REMOVE n:OLD_LABEL
+SET n:NEW_LABEL
+```

@@ -25,6 +25,7 @@ docker run -d --name neo4j -e NEO4J_AUTH=neo4j/123456 --net=host --privileged=tr
 -v /opt/neo4j/import:/var/lib/neo4j/import \
 -v /opt/neo4j/data:/var/lib/neo4j/data \
 neo4j:latest
+
 ```
 四、查看容器状态及日志
 ```
