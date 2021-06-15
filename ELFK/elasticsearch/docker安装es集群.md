@@ -100,7 +100,7 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9201:9201 \
 -p 9301:9301 \
--v /opt/es-cluster/es01/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /opt/es-cluster/es01/es.yml:/usr/share/elasticsearch/config/es.yml \
 -v /opt/es-cluster/es01/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es01/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es01/plugins:/usr/share/elasticsearch/plugins \
@@ -113,7 +113,7 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9202:9202 \
 -p 9302:9302 \
--v /opt/es-cluster/es02/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /opt/es-cluster/es02/es.yml:/usr/share/elasticsearch/config/es.yml \
 -v /opt/es-cluster/es02/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es02/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es02/plugins:/usr/share/elasticsearch/plugins \
@@ -126,7 +126,7 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9203:9203 \
 -p 9303:9303 \
--v /opt/es-cluster/es03/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /opt/es-cluster/es03/es.yml:/usr/share/elasticsearch/config/es.yml \
 -v /opt/es-cluster/es03/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es03/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es03/plugins:/usr/share/elasticsearch/plugins \
@@ -159,6 +159,26 @@ curl http://172.16.119.181:9201/_cluster/health
 ```
 > 集群的状态（status）：red红表示集群不可用，有故障。yellow黄表示集群不可靠但可用，一般单节点时就是此状态。green正常状态，
 > 表示集群一切正常
+
+### 6 安装kibana
+kibana是一个查看es数据的可视化工具
+
+#### 6.1 编辑配置文件
+```shell script
+# vim /opt/es-cluster/config/kibana.yml
+
+# Default Kibana configuration for docker target
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: [ "http://172.16.119.181:9201","http://172.16.119.181:9202","http://172.16.119.181:9203" ]
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+```
+> 修改配置文件中的ip为自己的服务器ip
+
+#### 6.2访问kibana
+```
+http://39.101.160.196:5601/
+```
 
 
 
