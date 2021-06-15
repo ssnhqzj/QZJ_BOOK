@@ -23,7 +23,7 @@ docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:la
 
 docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=jzt@91530127MA6NH14262# -d mysql:latest --lower_case_table_names=1
 
-docker run --name mysqldb -p 6033:3306 -e MYSQL_ROOT_PASSWORD=zxy@SB#880322# -d mysql:5.7 --lower_case_table_names=1
+docker run --name mysqldb -p 6033:3306 -e MYSQL_ROOT_PASSWORD=ZHANG#peng#880322# -d mysql:5.7 --lower_case_table_names=1
 ```
 
 挂载目录方式：

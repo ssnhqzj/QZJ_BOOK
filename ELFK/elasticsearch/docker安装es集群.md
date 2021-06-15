@@ -11,12 +11,13 @@ sysctl -w vm.max_map_count=262144
 
 # 2. 创建实例的数据和日志文件目录
 ```shell script
-mkdir -p /opt/es-cluster/es01/data
-mkdir -p /opt/es-cluster/es01/logs
-mkdir -p /opt/es-cluster/es02/data
-mkdir -p /opt/es-cluster/es02/logs
-mkdir -p /opt/es-cluster/es03/data
-mkdir -p /opt/es-cluster/es03/logs
+mkdir -p /opt/es-cluster/es01/data \
+mkdir -p /opt/es-cluster/es01/logs \
+mkdir -p /opt/es-cluster/es02/data \
+mkdir -p /opt/es-cluster/es02/logs \
+mkdir -p /opt/es-cluster/es03/data \
+mkdir -p /opt/es-cluster/es03/logs \
+mkdir -p /opt/kibana/config
 
 ## es的用户id为1000，这里暂且授权给所有人
 sudo chmod 777 /opt/es-cluster -R
@@ -127,7 +128,7 @@ services:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: http://es01:9200
     volumes:
-      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+      - /opt/kibana/config:/usr/share/kibana/config
     networks:
       - elastic
 
