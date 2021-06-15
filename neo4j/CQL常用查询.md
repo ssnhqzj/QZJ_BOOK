@@ -24,3 +24,13 @@ MATCH (n:OLD_LABEL)
 REMOVE n:OLD_LABEL
 SET n:NEW_LABEL
 ```
+
+## 修改关系类型
+```genericsql
+MATCH (n:User {name:"foo"})-[r:REL]->(m:User {name:"bar"})
+CREATE (n)-[r2:NEWREL]->(m)
+// 下面复制属性
+SET r2 = r
+WITH r
+DELETE r
+```
