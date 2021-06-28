@@ -67,3 +67,15 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
 
 mysql --help | grep my.cnf
 ```
+
+#### 修改Mysql 数据库的 only_full_group_by 模式
+```shell script
+#拷贝出文件
+docker cp  mysqldb:/etc/mysql/mysql.conf.d/mysqld.cnf /mysqld.cnf
+#编辑
+vim /mysqld.cnf
+#最后加入以下内容：
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+# 再拷贝进入
+docker cp /mysqld.cnf mysqldb:/etc/mysql/mysql.conf.d/mysqld.cnf
+```
