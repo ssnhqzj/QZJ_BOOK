@@ -16,5 +16,14 @@ docker run -p 9000:9000 --name minio \
 -e "MINIO_SECRET_KEY=Zxy880322" \
 -v /home/data:/data \
 -v /home/config:/root/.minio \
-minio/minio server /data
+minio/minio:RELEASE.2021-06-17T00-10-46Z server /data
+
+//新版本
+docker run -p 9000:9000 -p 9001:9001 --name minio \
+-d --restart=always \
+-e "MINIO_ACCESS_KEY=admin" \
+-e "MINIO_SECRET_KEY=Zxy880322" \
+-v /home/data:/data \
+-v /home/config:/root/.minio \
+minio/minio server /data --console-address ":9001"
 ```

@@ -44,7 +44,7 @@ docker pull docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 
 ### 3 创建es配置文件，每个节点对应一个配置文件
 ```shell script
-# vim /opt/es-cluster/es01/es.yml
+# vim /opt/es-cluster/es01/elasticsearch.yml
 
 cluster.name: kf-es-cluster
 node.name: es-node01
@@ -59,7 +59,7 @@ node.data: true
 discovery.seed_hosts: ["172.16.119.181:9301","172.16.119.181:9302","172.16.119.181:9303"]
 cluster.initial_master_nodes: ["172.16.119.181:9301","172.16.119.181:9302","172.16.119.181:9303"]
 # -----------------------------------------------------------------------------------------------#
-# vim /opt/es-cluster/es02/es.yml
+# vim /opt/es-cluster/es02/elasticsearch.yml
 
 cluster.name: kf-es-cluster
 node.name: es-node02
@@ -74,7 +74,7 @@ node.data: true
 discovery.seed_hosts: ["172.16.119.181:9301","172.16.119.181:9302","172.16.119.181:9303"]
 cluster.initial_master_nodes: ["172.16.119.181:9301","172.16.119.181:9302","172.16.119.181:9303"]
 # -----------------------------------------------------------------------------------------------#
-# vim /opt/es-cluster/es03/es.yml
+# vim /opt/es-cluster/es03/elasticsearch.yml
 
 cluster.name: kf-es-cluster
 node.name: es-node03
@@ -100,11 +100,11 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9201:9201 \
 -p 9301:9301 \
--v /opt/es-cluster/es01/es.yml:/usr/share/elasticsearch/config/es.yml \
+-v /opt/es-cluster/es01/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
 -v /opt/es-cluster/es01/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es01/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es01/plugins:/usr/share/elasticsearch/plugins \
---name es01 elasticsearch:7.6.2
+--name es01 docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 ```
 
 #### 启动es02
@@ -113,11 +113,11 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9202:9202 \
 -p 9302:9302 \
--v /opt/es-cluster/es02/es.yml:/usr/share/elasticsearch/config/es.yml \
+-v /opt/es-cluster/es02/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
 -v /opt/es-cluster/es02/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es02/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es02/plugins:/usr/share/elasticsearch/plugins \
---name es01 elasticsearch:7.6.2
+--name es02 docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 ```
 
 #### 启动es03
@@ -126,11 +126,11 @@ docker run \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d \
 -p 9203:9203 \
 -p 9303:9303 \
--v /opt/es-cluster/es03/es.yml:/usr/share/elasticsearch/config/es.yml \
+-v /opt/es-cluster/es03/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
 -v /opt/es-cluster/es03/data:/usr/share/elasticsearch/data \
 -v /opt/es-cluster/es03/logs:/usr/share/elasticsearch/logs \
 -v /opt/es-cluster/es03/plugins:/usr/share/elasticsearch/plugins \
---name es01 elasticsearch:7.6.2
+--name es03 docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 ```
 
 ### 5 验证是否启动成功
@@ -174,6 +174,17 @@ elasticsearch.hosts: [ "http://172.16.119.181:9201","http://172.16.119.181:9202"
 xpack.monitoring.ui.container.elasticsearch.enabled: true
 ```
 > 修改配置文件中的ip为自己的服务器ip
+
+#### 6.2 启动容器
+```shell script
+docker run \
+-d \
+--name=kibana \
+--restart=always \
+-p 5601:5601 \
+-v /opt/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml \
+kibana:7.6.2
+```
 
 #### 6.2访问kibana
 ```

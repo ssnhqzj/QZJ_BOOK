@@ -112,10 +112,25 @@ sh startup.sh
 ```
 
 ## 全量同步
-全量同步需要手动调用api,测试ok,如下：
+### 1. 全量同步需要手动调用api,测试ok,如下：
 ```shell script
- curl http://127.0.0.1:8081/etl/es/canaltest.yml -X POST
+curl http://127.0.0.1:8081/etl/es/canaltest.yml -X POST
+curl http://127.0.0.1:8881/etl/rdb/mysql1/sys_user.yml -X POST -d "params=1;100000"
 ```
+
+### 2. 全量同步数据量较大会提示超时
+查看 canal 源码得知当同步的数据量大于1w时，会分批进行同步，每批1w条记录，并使用多线程来并行执行任务，而 adapter 默认的连接池为3，
+当线程获取数据库连接等待超过1分钟就会抛出该异常。
+解决方案：
+修改 adapter 的 conf/application.yml 文件中的 srcDataSources下的数据源配置下（如defaultDS下），增加 maxActive 配置数据库的
+最大连接数为当前服务器cpu的可用线程数
+```shell script
+# cpu线程数可以下命令查看
+grep 'processor' /proc/cpuinfo | sort -u | wc -l
+
+
+```
+
 
 ## 遇到问题1
 前面提到的application.yml中的es配置名称是"es", 看官方文档中注释的是es6或es7,以为需要配置es6
@@ -148,6 +163,25 @@ public Object getValFromData(ESMapping mapping, Map<String, Object> dmlData, Str
 > * 修改上边方法中的 dmlData.get(columnName.toUpperCase());
 > * 重新rebuild下项目，mvn install 打包，拷贝maven仓库中的client-adapter.elasticsearch-1.1.4-jar-with-dependencies.jar
 >   覆盖官方包中的plugin下的相应jar，测试ok
+
+## 遇到问题4
+启动适配器时提示连接数据库空指针异常，原因是由于adapter中使用的mysql的jar和数据库版本不匹配，需要做如下修改
+### 1. mysql连接器jar拷贝到canal.adapter-1.1.4/lib目录中
+例如我的数据版本是8.0.*的，我将mysql-connector-java-8.0.15.jar拷贝到canal.adapter-1.1.4/lib目录中
+
+### 2. 修改pom.xml文件中的mysql依赖
+pom文件在一下路径中
+canal.adapter-1.1.4\plugin\client-adapter.rdb-1.1.4-jar-with-dependencies.jar\META-INF\maven\com.alibaba.otter\client-adapter.rdb
+替换之前的mysql-connector-java内容：
+```shell script
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.15</version>
+    <scope>test</scope>
+</dependency>
+```
+
 
 
 

@@ -24,6 +24,7 @@ dokcer cp ef:/etc/nginx/conf.d/default.conf ./conf/
 docker run -d \
 --name ngx \
 -p 80:80 \
+-p 8080:8080 \
 -v /opt/nginx/nginx.conf:/etc/nginx/nginx.conf \
 -v /opt/nginx/logs:/var/log/nginx \
 -v /opt/nginx/html:/usr/share/nginx/html \
