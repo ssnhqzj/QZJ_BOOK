@@ -3,9 +3,13 @@ Docker CE 支持 64 位版本 CentOS 7，并且要求内核版本不低于 3.10
 卸载旧版本Docker
 ```
 $ sudo yum remove docker \
-           docker-common \
-           docker-selinux \
-           docker-engine
+      docker-client \
+      docker-client-latest \
+      docker-common \
+      docker-latest \
+      docker-latest-logrotate \
+      docker-logrotate \
+      docker-engine
 ```
 
 使用yum安装
@@ -18,9 +22,8 @@ $ sudo yum install -y yum-utils \
 
 鉴于国内网络问题，强烈建议使用国内源执行下面的命令添加 yum 软件源：
 ```
-$ sudo yum-config-manager \
-    --add-repo \
-    https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo
+$ sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+$ sudo sed -i 's+download.docker.com+mirrors.aliyun.com/docker-ce+' /etc/yum.repos.d/docker-ce.repo
 ```
 安装Docker CE
 更新yum软件源缓存，并安装docker-ce
