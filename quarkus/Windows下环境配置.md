@@ -25,7 +25,8 @@ OpenJDK 64-Bit Server VM GraalVM CE 22.2.0 (build 11.0.16+8-jvmci-22.2-b06, mixe
 ```
 
 ## 安装maven
-maven需要Apache Maven 3.8.1+
+安装步骤略
+> maven需要Apache Maven 3.8.1+
 
 ## 安装C语言开发环境(编译原生文件需要)
 ### 安装VS C++
