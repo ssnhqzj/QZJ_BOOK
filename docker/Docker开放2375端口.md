@@ -21,5 +21,6 @@ Restart=always
 ```
 
 ```
- systemctl daemon-reload systemctl restart docker.service
+ systemctl daemon-reload 
+ systemctl restart docker.service
 ```

@@ -26,4 +26,16 @@ docker run -p 9000:9000 -p 9001:9001 --name minio \
 -v /home/data:/data \
 -v /home/config:/root/.minio \
 minio/minio server /data --console-address ":9001"
+
+
+docker run \
+--name minio \
+-p 9000:9000  \
+-p 9090:9090  \
+-d --restart=always \
+-e "MINIO_ROOT_USER=admin" \
+-e "MINIO_ROOT_PASSWORD=com.qingcheng" \
+-v /home/data:/data \
+-v /home/config:/root/.minio \
+minio/minio server  /data --console-address ":9090" --address ":9000"
 ```

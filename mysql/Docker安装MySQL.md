@@ -25,6 +25,7 @@ docker run --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=jzt@91530127MA6NH1
 
 docker run --name mysqldb -p 6033:3306 -e MYSQL_ROOT_PASSWORD=ZHANG#peng#880322# -d mysql:5.7 --lower_case_table_names=1
 docker run --name mysqldb -p 6033:3306 -e MYSQL_ROOT_PASSWORD=honeybeeUstar999# -d mysql:5.7 --lower_case_table_names=1
+docker run --name mysqldb --restart=always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0 --lower_case_table_names=1 
 ```
 
 挂载目录方式：
@@ -62,6 +63,9 @@ mysql -u root -p
 ```
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'honeybeeUstar999#';
+
+GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+
 ```
 
 #### 可进入docker容器内部用以下命令查看mysql配置文件位置
