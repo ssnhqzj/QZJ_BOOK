@@ -78,7 +78,7 @@ curl https://coobee.net:5732/info
 
 指定证书访问测试
 ```shell script
-curl https://coobee.net:2376/info --cert /data/cert/docker/cert.pem --key /data/cert/docker/key.pem --cacert /data/cert/docker/ca.pem
+curl https://coobee.net:5732/info --cert /data/cert/docker/cert.pem --key /data/cert/docker/key.pem --cacert /data/cert/docker/ca.pem
 
 ```
 
@@ -125,7 +125,7 @@ IDEA连接Docker配置修改pom.xml
                 <!-- 指定远程 Docker API地址  -->
                 <dockerHost>https://coobee.net:5732</dockerHost>
                 <!-- 指定tls证书的目录 -->
-                <dockerCertPath>C:\certs\docker\coobee.net</dockerCertPath>
+                <dockerCertPath>D:\certs\docker\coobee.net</dockerCertPath>
 
                 <!-- 复制 jar包到docker容器指定目录-->
                 <resources>
