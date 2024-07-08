@@ -202,7 +202,13 @@ start-all.sh
 ```
 在三台服务器分别输入jps可以判断是否启动成功，出现下面内容说明成功
 ```shell
-
+11041 ResourceManager
+11493 JobHistoryServer
+10568 NameNode
+10874 SecondaryNameNode
+11163 NodeManager
+32206 Jps
+10703 DataNode
 ```
 #### 12.关闭Hadoop
 只需要在master服务器输入下面命令即可，三个服务器正常停止hadoop的操作。

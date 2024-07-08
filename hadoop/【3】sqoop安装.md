@@ -70,3 +70,61 @@ Sqoop运行的时候不需要启动后台进程,直接执行sqoop命令加参数
 [root@qianfeng01 sqoop-1.4.7] sqoop list-databases --connect jdbc:mysql://10.8.1.161:3306/ --username root --password QingCheng1234567890.
 ```
 
+## Import的控制参数
+常见Import的控制参数有如下几个:
+
+|   Argument   |  Description    |
+| ---- | ---- |
+|--append	|通过追加的方式导入到HDFS|
+|--as-avrodatafile	|导入为 Avro Data 文件格式|
+|--as-sequencefile	|导入为 SequenceFiles文件格式|
+|--as-textfile	|导入为文本格式 (默认值)|
+|--as-parquetfile	|导入为 Parquet 文件格式|
+|--columns	|指定要导入的列|
+|--delete-target-dir	|如果目标文件夹存在,则删除|
+|--fetch-size	|一次从数据库读取的数量大小|
+|-m,--num-mappers	|用来指定map tasks的数量,用来做并行导入|
+|-e,--query	|指定要查询的SQL语句|
+|--split-by	|用来指定分片的列|
+|--table	|需要导入的表名|
+|--target-dir	|HDFS 的目标文件夹|
+|--where	|用来指定导入数据的where条件|
+|-z,--compress	|是否要压缩|
+|--compression-codec	|使用Hadoop压缩 (默认是 gzip)|
+
+## 指定表导入
+```shell
+[root@qianfeng01 sqoop1.4.7]# sqoop import --connect jdbc:mysql://10.8.1.161:3306/crm-system --username root --password QingCheng1234567890. \
+--table sys_account \
+--target-dir hdfs://10.8.1.189:9000/user/qzj/sys_account \
+--delete-target-dir
+```
+
+## 单双引号区别
+在导入数据时,默认的字符引号是单引号,这样sqoop在解析的时候就安装字面量来解析,不会做转移:例如:
+
+```shell
+--query 'select empno,mgr,job from emp WHERE empno>7800 and $CONDITIONS'  \
+```
+
+
+如果使用了双引号,那么Sqoop在解析的时候会做转义的解析,这时候就必须要加转义字符: 如下:
+
+```shell
+--query "select empno,mgr,job from emp WHERE empno>7800 and \$CONDITIONS" \
+```
+
+##  MySql缺主键问题
+1、如果mysql的表没有主键，将会报错：
+
+```shell
+19/12/02 10:39:50 ERROR tool.ImportTool: Import 
+failed: No primary key could be found for table u1. Please specify one with 
+-- split-  by or perform a sequential import with '-m 1
+```
+
+
+解决方案:
+
+通过 --split-by 来指定要分片的列
+
